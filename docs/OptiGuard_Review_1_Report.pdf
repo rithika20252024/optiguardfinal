@@ -1,0 +1,535 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [2 0 R 4 0 R 6 0 R 8 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Length 5463 >>
+stream
+BT /F2 15.00 Tf 185.90 800.00 Td (Vellore Institute of Technology) Tj ET
+BT /F3 9.50 Tf 165.26 785.00 Td (\(Deemed to be University under section 3 of UGC Act, 1956\)) Tj ET
+BT /F2 12.50 Tf 207.50 768.00 Td (BCSE307P - Compiler Design Lab) Tj ET
+BT /F2 11.00 Tf 223.58 753.00 Td (Report Submission Guidelines) Tj ET
+0.80 w 230.00 751.00 m 365.00 751.00 l S
+BT /F2 10.50 Tf 45.00 731.00 Td (Project Title:) Tj ET
+BT /F1 10.50 Tf 120.00 731.00 Td (OptiGuard - An Adaptive Compiler Optimization Framework with) Tj ET
+BT /F1 10.50 Tf 120.00 718.00 Td (Degradation Detection and Safe Rollback) Tj ET
+BT /F2 10.50 Tf 45.00 703.00 Td (Code Link:) Tj ET
+BT /F1 10.50 Tf 120.00 703.00 Td (https://github.com/rithika20252024/optiguard) Tj ET
+BT /F2 10.50 Tf 45.00 688.00 Td (Team Member\(s\): Max Three members) Tj ET
+0.92 g 45.00 656.95 505.00 19.05 re f 0 g
+0.50 w 45.00 656.95 505.00 19.05 re S
+BT /F2 8.50 Tf 52.30 661.50 Td (S. No) Tj ET
+0.50 w 80.00 676.00 m 80.00 656.95 l S
+BT /F2 8.50 Tf 100.06 661.50 Td (Register No) Tj ET
+0.50 w 165.00 676.00 m 165.00 656.95 l S
+BT /F2 8.50 Tf 168.00 661.50 Td (Name) Tj ET
+0.50 w 260.00 676.00 m 260.00 656.95 l S
+BT /F2 8.50 Tf 263.00 661.50 Td (Contributions) Tj ET
+0.50 w 45.00 608.45 505.00 48.50 re S
+BT /F1 8.50 Tf 60.46 644.45 Td (1) Tj ET
+0.50 w 80.00 656.95 m 80.00 608.45 l S
+BT /F1 8.50 Tf 104.14 644.45 Td (24BCT0156) Tj ET
+0.50 w 165.00 656.95 m 165.00 608.45 l S
+BT /F2 8.50 Tf 168.00 644.45 Td (Aesha Singh) Tj ET
+0.50 w 260.00 656.95 m 260.00 608.45 l S
+BT /F1 8.50 Tf 263.00 644.45 Td (Common Subexpression Elimination \(value numbering\) and strength) Tj ET
+BT /F1 8.50 Tf 263.00 634.25 Td (reduction; IR feature extractor; cost function J\(IR\) and Delta J) Tj ET
+BT /F1 8.50 Tf 263.00 624.05 Td (degradation detection; adaptive pass scheduler; literature survey) Tj ET
+BT /F1 8.50 Tf 263.00 613.85 Td (\(papers 1-8\) and novelty section) Tj ET
+0.50 w 45.00 559.95 505.00 48.50 re S
+BT /F1 8.50 Tf 60.46 595.95 Td (2) Tj ET
+0.50 w 80.00 608.45 m 80.00 559.95 l S
+BT /F1 8.50 Tf 104.14 595.95 Td (24BCE2984) Tj ET
+0.50 w 165.00 608.45 m 165.00 559.95 l S
+BT /F1 8.50 Tf 168.00 595.95 Td (Rithika) Tj ET
+0.50 w 260.00 608.45 m 260.00 559.95 l S
+BT /F1 8.50 Tf 263.00 595.95 Td (Lexer, recursive-descent parser, TAC/CFG generation; Constant) Tj ET
+BT /F1 8.50 Tf 263.00 585.75 Td (Folding, Algebraic Simplification, Dead-Code Elimination; stack-based) Tj ET
+BT /F1 8.50 Tf 263.00 575.55 Td (snapshot, rollback engine and tabu list; benchmark evaluation;) Tj ET
+BT /F1 8.50 Tf 263.00 565.35 Td (literature survey \(papers 9-15\) and problem statement) Tj ET
+BT /F2 12.00 Tf 45.00 543.95 Td (Problem Identification & Objectives - 2M) Tj ET
+BT /F2 10.50 Tf 45.00 528.95 Td (Problem Statement) Tj ET
+BT /F1 9.50 Tf 45.00 515.95 Td (Production compilers such as GCC and LLVM/Clang run a fixed, preset order of optimization passes inside levels) Tj ET
+BT /F1 9.50 Tf 45.00 503.95 Td (like -O1, -O2 and -O3. Compiler transformations are non-commutative, so no single ordering suits every) Tj ET
+BT /F1 9.50 Tf 45.00 491.95 Td (program, and with N passes there are N! possible orderings. Each pass is designed assuming a local benefit,) Tj ET
+BT /F1 9.50 Tf 45.00 479.95 Td (yet in practice an apparently beneficial pass can degrade the IR and yield worse machine code. Three typical) Tj ET
+BT /F1 9.50 Tf 45.00 467.95 Td (causes are register-pressure explosion \(aggressive CSE or LICM extends live ranges and forces memory spills\),) Tj ET
+BT /F1 9.50 Tf 45.00 455.95 Td (code bloat and instruction-cache thrashing \(aggressive inlining and unrolling\), and phase destabilization \(an) Tj ET
+BT /F1 9.50 Tf 45.00 443.95 Td (early pass destroys the canonical patterns that later passes need\).) Tj ET
+BT /F1 9.50 Tf 45.00 427.95 Td (The gap is that passes run speculatively and irreversibly. Existing compilers and autotuners search for good) Tj ET
+BT /F1 9.50 Tf 45.00 415.95 Td (orderings offline or at flag level, but none measure the IR between passes, and none can atomically undo a) Tj ET
+BT /F1 9.50 Tf 45.00 403.95 Td (harmful pass. This project addresses the need for a compiler that treats every optimization pass as a) Tj ET
+BT /F1 9.50 Tf 45.00 391.95 Td (transaction: measure it, keep it if it helps, and roll it back if it hurts.) Tj ET
+BT /F2 10.50 Tf 45.00 369.95 Td (Objectives \(Minimum 3\)) Tj ET
+BT /F2 9.50 Tf 50.00 356.95 Td (*) Tj ET
+BT /F2 9.50 Tf 60.00 356.95 Td (Frontend and IR pipeline:) Tj ET
+BT /F1 9.50 Tf 190.00 356.95 Td (* Frontend and IR pipeline: build a lexer and recursive-descent parser for a procedural C-subset that lowers) Tj ET
+BT /F1 9.50 Tf 60.00 344.95 Td (programs to observable Three-Address Code \(TAC\) and a Control Flow Graph \(CFG\).) Tj ET
+BT /F2 9.50 Tf 50.00 330.95 Td (*) Tj ET
+BT /F2 9.50 Tf 60.00 330.95 Td (Optimization suite:) Tj ET
+BT /F1 9.50 Tf 160.00 330.95 Td (* Optimization suite: implement Constant Folding and Propagation, Algebraic Simplification and Strength) Tj ET
+BT /F1 9.50 Tf 60.00 318.95 Td (Reduction, Dead-Code Elimination, and CSE via Value Numbering, each reporting the instructions it changes.) Tj ET
+BT /F2 9.50 Tf 50.00 304.95 Td (*) Tj ET
+BT /F2 9.50 Tf 60.00 304.95 Td (Multi-objective cost function:) Tj ET
+BT /F1 9.50 Tf 215.00 304.95 Td (* Multi-objective cost function: define J\(IR\) = w1*N_instructions + w2*R_live_ranges + w3*C_alu_cycles and) Tj ET
+BT /F1 9.50 Tf 60.00 292.95 Td (score every intermediate IR state.) Tj ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 1 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Times-Italic >> /F4 << /Type /Font /Subtype /Type1 /BaseFont /Times-BoldItalic >> >> >> >>
+endobj
+5 0 obj
+<< /Length 12179 >>
+stream
+BT /F2 9.50 Tf 50.00 800.00 Td (*) Tj ET
+BT /F2 9.50 Tf 60.00 800.00 Td (Degradation detection:) Tj ET
+BT /F1 9.50 Tf 175.00 800.00 Td (* Degradation detection: compute Delta J = J\(IR_new\) - J\(IR_prev\) after every pass, and raise a degradation) Tj ET
+BT /F1 9.50 Tf 60.00 788.00 Td (interrupt when Delta J >= 0 or a register-pressure threshold is breached.) Tj ET
+BT /F2 9.50 Tf 50.00 774.00 Td (*) Tj ET
+BT /F2 9.50 Tf 60.00 774.00 Td (Transactional rollback:) Tj ET
+BT /F1 9.50 Tf 180.00 774.00 Td (* Transactional rollback: use stack-based snapshots to restore the IR exactly to the last checkpoint and) Tj ET
+BT /F1 9.50 Tf 60.00 762.00 Td (record the offending pass on an IR-state tabu list.) Tj ET
+BT /F2 9.50 Tf 50.00 748.00 Td (*) Tj ET
+BT /F2 9.50 Tf 60.00 748.00 Td (Adaptive pass scheduler:) Tj ET
+BT /F1 9.50 Tf 185.00 748.00 Td (* Adaptive pass scheduler: choose the next pass from real-time IR structural features instead of a hardcoded) Tj ET
+BT /F1 9.50 Tf 60.00 736.00 Td (list, and evaluate it against a fixed-order baseline on a benchmark set.) Tj ET
+BT /F1 9.50 Tf 45.00 722.00 Td (Objectives are kept specific and measurable: instruction count, live-range count and ALU-cycle cost before) Tj ET
+BT /F1 9.50 Tf 45.00 710.00 Td (versus after optimization, number of degradations detected and rolled back, and final J\(IR\) against the) Tj ET
+BT /F1 9.50 Tf 45.00 698.00 Td (fixed-order baseline.) Tj ET
+BT /F2 12.00 Tf 45.00 674.00 Td (Literature Survey - 2M) Tj ET
+BT /F1 9.50 Tf 45.00 661.00 Td (The table below summarizes 15 relevant papers, tools and existing systems.) Tj ET
+0.92 g 45.00 633.25 505.00 17.75 re f 0 g
+0.50 w 45.00 633.25 505.00 17.75 re S
+BT /F2 7.50 Tf 50.30 637.50 Td (S.No) Tj ET
+0.50 w 70.00 651.00 m 70.00 633.25 l S
+BT /F2 7.50 Tf 73.00 637.50 Td (Title / Author / Year) Tj ET
+0.50 w 210.00 651.00 m 210.00 633.25 l S
+BT /F2 7.50 Tf 213.00 637.50 Td (Methodology) Tj ET
+0.50 w 325.00 651.00 m 325.00 633.25 l S
+BT /F2 7.50 Tf 328.00 637.50 Td (Findings) Tj ET
+0.50 w 440.00 651.00 m 440.00 633.25 l S
+BT /F2 7.50 Tf 443.00 637.50 Td (Gap Identified) Tj ET
+0.50 w 45.00 589.75 505.00 43.50 re S
+BT /F1 7.50 Tf 55.70 621.75 Td (1) Tj ET
+0.50 w 70.00 633.25 m 70.00 589.75 l S
+BT /F1 7.50 Tf 73.00 621.75 Td (Lattner & Adve, 2004. LLVM: A) Tj ET
+BT /F1 7.50 Tf 73.00 612.75 Td (Compilation Framework for Lifelong) Tj ET
+BT /F1 7.50 Tf 73.00 603.75 Td (Program Analysis & Transformation) Tj ET
+BT /F1 7.50 Tf 73.00 594.75 Td (\(CGO\)) Tj ET
+0.50 w 210.00 633.25 m 210.00 589.75 l S
+BT /F2 7.50 Tf 213.00 621.75 Td (Typed SSA-based IR with a) Tj ET
+BT /F2 7.50 Tf 213.00 612.75 Td (modular pass manager) Tj ET
+0.50 w 325.00 633.25 m 325.00 589.75 l S
+BT /F1 7.50 Tf 328.00 621.75 Td (Pass pipelines are composed) Tj ET
+BT /F1 7.50 Tf 328.00 612.75 Td (from reusable passes over a) Tj ET
+BT /F1 7.50 Tf 328.00 603.75 Td (common IR) Tj ET
+0.50 w 440.00 633.25 m 440.00 589.75 l S
+BT /F1 7.50 Tf 443.00 621.75 Td (Fixed -O levels; no per-pass) Tj ET
+BT /F1 7.50 Tf 443.00 612.75 Td (measurement of degradation) Tj ET
+BT /F1 7.50 Tf 443.00 603.75 Td (and no undo) Tj ET
+0.50 w 45.00 555.62 505.00 34.12 re S
+BT /F1 7.50 Tf 55.70 578.25 Td (2) Tj ET
+0.50 w 70.00 589.75 m 70.00 555.62 l S
+BT /F1 7.50 Tf 73.00 578.25 Td (Bodin, Kisuki, Knijnenburg, O'Boyle &) Tj ET
+BT /F1 7.50 Tf 73.00 569.25 Td (Rohou, 1998. Iterative Compilation in) Tj ET
+BT /F1 7.50 Tf 73.00 560.25 Td (a Non-Linear Optimisation Space) Tj ET
+0.50 w 210.00 589.75 m 210.00 555.62 l S
+BT /F1 7.50 Tf 213.00 578.25 Td (Repeatedly compiles and runs a) Tj ET
+BT /F1 7.50 Tf 213.00 569.25 Td (program with different) Tj ET
+BT /F1 7.50 Tf 213.00 560.25 Td (optimization parameters) Tj ET
+0.50 w 325.00 589.75 m 325.00 555.62 l S
+BT /F1 7.50 Tf 328.00 578.25 Td (Search over parameters beats) Tj ET
+BT /F1 7.50 Tf 328.00 569.25 Td (static settings on the target) Tj ET
+0.50 w 440.00 589.75 m 440.00 555.62 l S
+BT /F1 7.50 Tf 443.00 578.25 Td (Needs many full) Tj ET
+BT /F1 7.50 Tf 443.00 569.25 Td (compile-and-run cycles; slow) Tj ET
+BT /F1 7.50 Tf 443.00 560.25 Td (and machine-specific) Tj ET
+0.50 w 45.00 512.12 505.00 43.50 re S
+BT /F1 7.50 Tf 55.70 544.12 Td (3) Tj ET
+0.50 w 70.00 555.62 m 70.00 512.12 l S
+BT /F1 7.50 Tf 73.00 544.12 Td (Cooper, Schielke & Subramanian, 1999.) Tj ET
+BT /F1 7.50 Tf 73.00 535.12 Td (Optimizing for Reduced Code Space) Tj ET
+BT /F1 7.50 Tf 73.00 526.12 Td (using Genetic Algorithms \(LCTES\)) Tj ET
+0.50 w 210.00 555.62 m 210.00 512.12 l S
+BT /F1 7.50 Tf 213.00 544.12 Td (Genetic algorithm evolves pass) Tj ET
+BT /F1 7.50 Tf 213.00 535.12 Td (sequences for code size) Tj ET
+0.50 w 325.00 555.62 m 325.00 512.12 l S
+BT /F1 7.50 Tf 328.00 544.12 Td (Evolved sequences outperform) Tj ET
+BT /F1 7.50 Tf 328.00 535.12 Td (the fixed default ordering) Tj ET
+0.50 w 440.00 555.62 m 440.00 512.12 l S
+BT /F1 7.50 Tf 443.00 544.12 Td (Offline search over hours; a) Tj ET
+BT /F1 7.50 Tf 443.00 535.12 Td (bad sequence is only scored) Tj ET
+BT /F1 7.50 Tf 443.00 526.12 Td (poorly, the culprit pass is) Tj ET
+BT /F1 7.50 Tf 443.00 517.12 Td (never isolated) Tj ET
+0.50 w 45.00 468.62 505.00 43.50 re S
+BT /F1 7.50 Tf 55.70 500.62 Td (4) Tj ET
+0.50 w 70.00 512.12 m 70.00 468.62 l S
+BT /F1 7.50 Tf 73.00 500.62 Td (Kulkarni, Hines, Hiser, Whalley,) Tj ET
+BT /F1 7.50 Tf 73.00 491.62 Td (Davidson & Jones, 2004. Fast Searches) Tj ET
+BT /F1 7.50 Tf 73.00 482.62 Td (for Effective Optimization Phase) Tj ET
+BT /F1 7.50 Tf 73.00 473.62 Td (Sequences \(PLDI\)) Tj ET
+0.50 w 210.00 512.12 m 210.00 468.62 l S
+BT /F1 7.50 Tf 213.00 500.62 Td (Search over phase sequences) Tj ET
+BT /F1 7.50 Tf 213.00 491.62 Td (with pruning of redundant) Tj ET
+BT /F1 7.50 Tf 213.00 482.62 Td (sequences) Tj ET
+0.50 w 325.00 512.12 m 325.00 468.62 l S
+BT /F1 7.50 Tf 328.00 500.62 Td (Cuts search cost while finding) Tj ET
+BT /F1 7.50 Tf 328.00 491.62 Td (good sequences) Tj ET
+0.50 w 440.00 512.12 m 440.00 468.62 l S
+BT /F1 7.50 Tf 443.00 500.62 Td (Requires execution or) Tj ET
+BT /F1 7.50 Tf 443.00 491.62 Td (simulation for feedback; no) Tj ET
+BT /F1 7.50 Tf 443.00 482.62 Td (monitoring between passes) Tj ET
+0.50 w 45.00 425.12 505.00 43.50 re S
+BT /F1 7.50 Tf 55.70 457.12 Td (5) Tj ET
+0.50 w 70.00 468.62 m 70.00 425.12 l S
+BT /F1 7.50 Tf 73.00 457.12 Td (Pan & Eigenmann, 2006. Fast and) Tj ET
+BT /F1 7.50 Tf 73.00 448.12 Td (Effective Orchestration of Compiler) Tj ET
+BT /F1 7.50 Tf 73.00 439.12 Td (Optimizations for Automatic) Tj ET
+BT /F1 7.50 Tf 73.00 430.12 Td (Performance Tuning \(CGO\)) Tj ET
+0.50 w 210.00 468.62 m 210.00 425.12 l S
+BT /F1 7.50 Tf 213.00 457.12 Td (Iterative elimination of) Tj ET
+BT /F1 7.50 Tf 213.00 448.12 Td (harmful optimization flags) Tj ET
+BT /F1 7.50 Tf 213.00 439.12 Td (using runtime profiles) Tj ET
+0.50 w 325.00 468.62 m 325.00 425.12 l S
+BT /F1 7.50 Tf 328.00 457.12 Td (Selects flag combinations that) Tj ET
+BT /F1 7.50 Tf 328.00 448.12 Td (improve measured performance) Tj ET
+0.50 w 440.00 468.62 m 440.00 425.12 l S
+BT /F1 7.50 Tf 443.00 457.12 Td (Needs runtime profiling on) Tj ET
+BT /F1 7.50 Tf 443.00 448.12 Td (hardware; decisions are at) Tj ET
+BT /F1 7.50 Tf 443.00 439.12 Td (flag level, not IR level) Tj ET
+0.50 w 45.00 391.00 505.00 34.12 re S
+BT /F1 7.50 Tf 55.70 413.62 Td (6) Tj ET
+0.50 w 70.00 425.12 m 70.00 391.00 l S
+BT /F1 7.50 Tf 73.00 413.62 Td (Agakov et al., 2006. Using Machine) Tj ET
+BT /F1 7.50 Tf 73.00 404.62 Td (Learning to Focus Iterative) Tj ET
+BT /F1 7.50 Tf 73.00 395.62 Td (Optimization \(CGO\)) Tj ET
+0.50 w 210.00 425.12 m 210.00 391.00 l S
+BT /F1 7.50 Tf 213.00 413.62 Td (Learns from past programs to) Tj ET
+BT /F1 7.50 Tf 213.00 404.62 Td (focus the search on promising) Tj ET
+BT /F1 7.50 Tf 213.00 395.62 Td (transformations) Tj ET
+0.50 w 325.00 425.12 m 325.00 391.00 l S
+BT /F1 7.50 Tf 328.00 413.62 Td (Reduces the number of search) Tj ET
+BT /F1 7.50 Tf 328.00 404.62 Td (iterations needed) Tj ET
+0.50 w 440.00 425.12 m 440.00 391.00 l S
+BT /F1 7.50 Tf 443.00 413.62 Td (Model quality depends on) Tj ET
+BT /F1 7.50 Tf 443.00 404.62 Td (training data; no safety net) Tj ET
+BT /F1 7.50 Tf 443.00 395.62 Td (if a prediction is wrong) Tj ET
+0.50 w 45.00 356.88 505.00 34.12 re S
+BT /F1 7.50 Tf 55.70 379.50 Td (7) Tj ET
+0.50 w 70.00 391.00 m 70.00 356.88 l S
+BT /F1 7.50 Tf 73.00 379.50 Td (Fursin et al., 2011. Milepost GCC:) Tj ET
+BT /F1 7.50 Tf 73.00 370.50 Td (Machine Learning Enabled Self-Tuning) Tj ET
+BT /F1 7.50 Tf 73.00 361.50 Td (Compiler \(IJPP\)) Tj ET
+0.50 w 210.00 391.00 m 210.00 356.88 l S
+BT /F1 7.50 Tf 213.00 379.50 Td (56 static program features) Tj ET
+BT /F1 7.50 Tf 213.00 370.50 Td (feed supervised learning that) Tj ET
+BT /F1 7.50 Tf 213.00 361.50 Td (predicts optimization flags) Tj ET
+0.50 w 325.00 391.00 m 325.00 356.88 l S
+BT /F1 7.50 Tf 328.00 379.50 Td (Automatically tunes GCC for) Tj ET
+BT /F1 7.50 Tf 328.00 370.50 Td (unseen programs) Tj ET
+0.50 w 440.00 391.00 m 440.00 356.88 l S
+BT /F1 7.50 Tf 443.00 379.50 Td (Macro-flag granularity;) Tj ET
+BT /F1 7.50 Tf 443.00 370.50 Td (black-box prediction with no) Tj ET
+BT /F1 7.50 Tf 443.00 361.50 Td (internal revert) Tj ET
+0.50 w 45.00 322.75 505.00 34.12 re S
+BT /F1 7.50 Tf 55.70 345.38 Td (8) Tj ET
+0.50 w 70.00 356.88 m 70.00 322.75 l S
+BT /F1 7.50 Tf 73.00 345.38 Td (Ansel et al., 2014. OpenTuner: An) Tj ET
+BT /F1 7.50 Tf 73.00 336.38 Td (Extensible Framework for Program) Tj ET
+BT /F1 7.50 Tf 73.00 327.38 Td (Autotuning \(PACT\)) Tj ET
+0.50 w 210.00 356.88 m 210.00 322.75 l S
+BT /F1 7.50 Tf 213.00 345.38 Td (Ensemble of search techniques) Tj ET
+BT /F1 7.50 Tf 213.00 336.38 Td (for autotuning arbitrary) Tj ET
+BT /F1 7.50 Tf 213.00 327.38 Td (parameters) Tj ET
+0.50 w 325.00 356.88 m 325.00 322.75 l S
+BT /F1 7.50 Tf 328.00 345.38 Td (General framework reusable) Tj ET
+BT /F1 7.50 Tf 328.00 336.38 Td (across domains) Tj ET
+0.50 w 440.00 356.88 m 440.00 322.75 l S
+BT /F1 7.50 Tf 443.00 345.38 Td (Domain-agnostic and) Tj ET
+BT /F1 7.50 Tf 443.00 336.38 Td (measurement-driven; knows) Tj ET
+BT /F1 7.50 Tf 443.00 327.38 Td (nothing about IR state) Tj ET
+0.50 w 45.00 269.88 505.00 52.88 re S
+BT /F1 7.50 Tf 55.70 311.25 Td (9) Tj ET
+0.50 w 70.00 322.75 m 70.00 269.88 l S
+BT /F1 7.50 Tf 73.00 311.25 Td (Ashouri et al., 2017. MiCOMP:) Tj ET
+BT /F1 7.50 Tf 73.00 302.25 Td (Mitigating the Compiler) Tj ET
+BT /F1 7.50 Tf 73.00 293.25 Td (Phase-Ordering Problem Using) Tj ET
+BT /F1 7.50 Tf 73.00 284.25 Td (Optimization Sub-Sequences and) Tj ET
+BT /F1 7.50 Tf 73.00 275.25 Td (Machine Learning \(ACM TACO\)) Tj ET
+0.50 w 210.00 322.75 m 210.00 269.88 l S
+BT /F1 7.50 Tf 213.00 311.25 Td (Clusters optimization) Tj ET
+BT /F1 7.50 Tf 213.00 302.25 Td (sub-sequences and predicts the) Tj ET
+BT /F1 7.50 Tf 213.00 293.25 Td (best with ML) Tj ET
+0.50 w 325.00 322.75 m 325.00 269.88 l S
+BT /F1 7.50 Tf 328.00 311.25 Td (Improves over standard -O) Tj ET
+BT /F1 7.50 Tf 328.00 302.25 Td (levels on benchmark suites) Tj ET
+0.50 w 440.00 322.75 m 440.00 269.88 l S
+BT /F1 7.50 Tf 443.00 311.25 Td (Predicts sequences ahead of) Tj ET
+BT /F1 7.50 Tf 443.00 302.25 Td (time; no in-flight detection) Tj ET
+BT /F1 7.50 Tf 443.00 293.25 Td (of a harmful pass) Tj ET
+0.50 w 45.00 226.38 505.00 43.50 re S
+BT /F1 7.50 Tf 53.90 258.38 Td (10) Tj ET
+0.50 w 70.00 269.88 m 70.00 226.38 l S
+BT /F1 7.50 Tf 73.00 258.38 Td (Ashouri, Killian, Cavazos, Palermo &) Tj ET
+BT /F1 7.50 Tf 73.00 249.38 Td (Silvano, 2018. A Survey on Compiler) Tj ET
+BT /F1 7.50 Tf 73.00 240.38 Td (Autotuning Using Machine Learning) Tj ET
+BT /F1 7.50 Tf 73.00 231.38 Td (\(ACM CSUR\)) Tj ET
+0.50 w 210.00 269.88 m 210.00 226.38 l S
+BT /F1 7.50 Tf 213.00 258.38 Td (Survey of two decades of) Tj ET
+BT /F1 7.50 Tf 213.00 249.38 Td (ML-based compiler autotuning) Tj ET
+0.50 w 325.00 269.88 m 325.00 226.38 l S
+BT /F1 7.50 Tf 328.00 258.38 Td (Classifies selection and) Tj ET
+BT /F1 7.50 Tf 328.00 249.38 Td (phase-ordering approaches) Tj ET
+0.50 w 440.00 269.88 m 440.00 226.38 l S
+BT /F1 7.50 Tf 443.00 258.38 Td (Highlights degradation and) Tj ET
+BT /F1 7.50 Tf 443.00 249.38 Td (robustness as open problems) Tj ET
+BT /F1 7.50 Tf 443.00 240.38 Td (and calls for) Tj ET
+BT /F1 7.50 Tf 443.00 231.38 Td (self-stabilizing compilers) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 3 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Times-Italic >> /F4 << /Type /Font /Subtype /Type1 /BaseFont /Times-BoldItalic >> >> >> >>
+endobj
+7 0 obj
+<< /Length 9097 >>
+stream
+0.92 g 45.00 782.25 505.00 17.75 re f 0 g
+0.50 w 45.00 782.25 505.00 17.75 re S
+BT /F2 7.50 Tf 50.30 786.50 Td (S.No) Tj ET
+0.50 w 70.00 800.00 m 70.00 782.25 l S
+BT /F2 7.50 Tf 73.00 786.50 Td (Title / Author / Year) Tj ET
+0.50 w 210.00 800.00 m 210.00 782.25 l S
+BT /F2 7.50 Tf 213.00 786.50 Td (Methodology) Tj ET
+0.50 w 325.00 800.00 m 325.00 782.25 l S
+BT /F2 7.50 Tf 328.00 786.50 Td (Findings) Tj ET
+0.50 w 440.00 800.00 m 440.00 782.25 l S
+BT /F2 7.50 Tf 443.00 786.50 Td (Gap Identified) Tj ET
+0.50 w 45.00 738.75 505.00 43.50 re S
+BT /F1 7.50 Tf 53.90 770.75 Td (11) Tj ET
+0.50 w 70.00 782.25 m 70.00 738.75 l S
+BT /F1 7.50 Tf 73.00 770.75 Td (Haj-Ali et al., 2020. AutoPhase:) Tj ET
+BT /F1 7.50 Tf 73.00 761.75 Td (Juggling HLS Phase Orderings in) Tj ET
+BT /F1 7.50 Tf 73.00 752.75 Td (Random Forests with Deep) Tj ET
+BT /F1 7.50 Tf 73.00 743.75 Td (Reinforcement Learning \(MLSys\)) Tj ET
+0.50 w 210.00 782.25 m 210.00 738.75 l S
+BT /F2 7.50 Tf 213.00 770.75 Td (Deep RL over LLVM pass) Tj ET
+BT /F2 7.50 Tf 213.00 761.75 Td (ordering using IR features) Tj ET
+0.50 w 325.00 782.25 m 325.00 738.75 l S
+BT /F1 7.50 Tf 328.00 770.75 Td (Learns orderings that improve) Tj ET
+BT /F1 7.50 Tf 328.00 761.75 Td (HLS cycle counts) Tj ET
+0.50 w 440.00 782.25 m 440.00 738.75 l S
+BT /F1 7.50 Tf 443.00 770.75 Td (Needs an expensive) Tj ET
+BT /F1 7.50 Tf 443.00 761.75 Td (evaluation per step and) Tj ET
+BT /F1 7.50 Tf 443.00 752.75 Td (heavy training; no rollback) Tj ET
+BT /F1 7.50 Tf 443.00 743.75 Td (of bad steps) Tj ET
+0.50 w 45.00 695.25 505.00 43.50 re S
+BT /F1 7.50 Tf 53.90 727.25 Td (12) Tj ET
+0.50 w 70.00 738.75 m 70.00 695.25 l S
+BT /F1 7.50 Tf 73.00 727.25 Td (Whitfield & Soffa, 1997. An Approach) Tj ET
+BT /F1 7.50 Tf 73.00 718.25 Td (for Exploring Code Improving) Tj ET
+BT /F1 7.50 Tf 73.00 709.25 Td (Transformations \(TOPLAS\)) Tj ET
+0.50 w 210.00 738.75 m 210.00 695.25 l S
+BT /F1 7.50 Tf 213.00 727.25 Td (Formal model of enabling and) Tj ET
+BT /F1 7.50 Tf 213.00 718.25 Td (disabling interactions between) Tj ET
+BT /F1 7.50 Tf 213.00 709.25 Td (transformations) Tj ET
+0.50 w 325.00 738.75 m 325.00 695.25 l S
+BT /F1 7.50 Tf 328.00 727.25 Td (Shows that one transformation) Tj ET
+BT /F1 7.50 Tf 328.00 718.25 Td (can create or destroy) Tj ET
+BT /F1 7.50 Tf 328.00 709.25 Td (opportunities for another) Tj ET
+0.50 w 440.00 738.75 m 440.00 695.25 l S
+BT /F1 7.50 Tf 443.00 727.25 Td (Analyses interactions but) Tj ET
+BT /F1 7.50 Tf 443.00 718.25 Td (offers no runtime mechanism) Tj ET
+BT /F1 7.50 Tf 443.00 709.25 Td (to recover from a harmful) Tj ET
+BT /F1 7.50 Tf 443.00 700.25 Td (one) Tj ET
+0.50 w 45.00 651.75 505.00 43.50 re S
+BT /F1 7.50 Tf 53.90 683.75 Td (13) Tj ET
+0.50 w 70.00 695.25 m 70.00 651.75 l S
+BT /F1 7.50 Tf 73.00 683.75 Td (Briggs, Cooper & Torczon, 1994.) Tj ET
+BT /F1 7.50 Tf 73.00 674.75 Td (Improvements to Graph Coloring) Tj ET
+BT /F1 7.50 Tf 73.00 665.75 Td (Register Allocation \(TOPLAS\)) Tj ET
+0.50 w 210.00 695.25 m 210.00 651.75 l S
+BT /F1 7.50 Tf 213.00 683.75 Td (Graph-coloring allocator with) Tj ET
+BT /F1 7.50 Tf 213.00 674.75 Td (optimistic coloring and) Tj ET
+BT /F1 7.50 Tf 213.00 665.75 Td (spilling) Tj ET
+0.50 w 325.00 695.25 m 325.00 651.75 l S
+BT /F1 7.50 Tf 328.00 683.75 Td (Better allocation and fewer) Tj ET
+BT /F1 7.50 Tf 328.00 674.75 Td (spills in practice) Tj ET
+0.50 w 440.00 695.25 m 440.00 651.75 l S
+BT /F1 7.50 Tf 443.00 683.75 Td (Spills appear only at the) Tj ET
+BT /F1 7.50 Tf 443.00 674.75 Td (end; earlier passes that) Tj ET
+BT /F1 7.50 Tf 443.00 665.75 Td (inflate register pressure) Tj ET
+BT /F1 7.50 Tf 443.00 656.75 Td (are not flagged) Tj ET
+0.50 w 45.00 617.62 505.00 34.12 re S
+BT /F1 7.50 Tf 53.90 640.25 Td (14) Tj ET
+0.50 w 70.00 651.75 m 70.00 617.62 l S
+BT /F1 7.50 Tf 73.00 640.25 Td (Lopes, Lee, Hur, Liu & Regehr, 2021.) Tj ET
+BT /F1 7.50 Tf 73.00 631.25 Td (Alive2: Bounded Translation) Tj ET
+BT /F1 7.50 Tf 73.00 622.25 Td (Validation for LLVM \(PLDI\)) Tj ET
+0.50 w 210.00 651.75 m 210.00 617.62 l S
+BT /F1 7.50 Tf 213.00 640.25 Td (Checks that an optimized) Tj ET
+BT /F1 7.50 Tf 213.00 631.25 Td (function refines the original) Tj ET
+0.50 w 325.00 651.75 m 325.00 617.62 l S
+BT /F1 7.50 Tf 328.00 640.25 Td (Finds real miscompilations in) Tj ET
+BT /F1 7.50 Tf 328.00 631.25 Td (LLVM passes) Tj ET
+0.50 w 440.00 651.75 m 440.00 617.62 l S
+BT /F1 7.50 Tf 443.00 640.25 Td (Validates correctness only;) Tj ET
+BT /F1 7.50 Tf 443.00 631.25 Td (says nothing about whether a) Tj ET
+BT /F1 7.50 Tf 443.00 622.25 Td (pass made code worse) Tj ET
+0.50 w 45.00 583.50 505.00 34.12 re S
+BT /F1 7.50 Tf 53.90 606.12 Td (15) Tj ET
+0.50 w 70.00 617.62 m 70.00 583.50 l S
+BT /F1 7.50 Tf 73.00 606.12 Td (Glover, 1989. Tabu Search, Part I) Tj ET
+BT /F1 7.50 Tf 73.00 597.12 Td (\(ORSA Journal on Computing\)) Tj ET
+0.50 w 210.00 617.62 m 210.00 583.50 l S
+BT /F1 7.50 Tf 213.00 606.12 Td (Metaheuristic that forbids) Tj ET
+BT /F1 7.50 Tf 213.00 597.12 Td (recently visited moves through) Tj ET
+BT /F1 7.50 Tf 213.00 588.12 Td (a tabu list) Tj ET
+0.50 w 325.00 617.62 m 325.00 583.50 l S
+BT /F1 7.50 Tf 328.00 606.12 Td (Avoids cycling and escapes) Tj ET
+BT /F1 7.50 Tf 328.00 597.12 Td (local optima) Tj ET
+0.50 w 440.00 617.62 m 440.00 583.50 l S
+BT /F1 7.50 Tf 443.00 606.12 Td (Not applied to per-IR-state) Tj ET
+BT /F1 7.50 Tf 443.00 597.12 Td (pass rejection in compilers,) Tj ET
+BT /F1 7.50 Tf 443.00 588.12 Td (which is what OptiGuard adds) Tj ET
+BT /F2 10.50 Tf 45.00 569.50 Td (Research gaps and project motivation) Tj ET
+BT /F1 9.20 Tf 45.00 556.50 Td (The surveyed work falls into three groups. Search-based approaches \(iterative compilation, genetic algorithms,) Tj ET
+BT /F1 9.20 Tf 45.00 545.00 Td (OpenTuner\) and learning-based approaches \(Milepost, MiCOMP, AutoPhase\) look for a good pass ordering or flag set,) Tj ET
+BT /F1 9.20 Tf 45.00 533.50 Td (but they work offline or at macro-flag level and depend on expensive measurement on target hardware. Formal work) Tj ET
+BT /F1 9.20 Tf 45.00 522.00 Td (on transformation interactions and on translation validation shows that passes can undermine each other and can) Tj ET
+BT /F1 9.20 Tf 45.00 510.50 Td (even be wrong, yet it offers no way to recover at compile time, and the register-allocation literature only) Tj ET
+BT /F1 9.20 Tf 45.00 499.00 Td (reveals spills after the fact. Autotuning surveys explicitly name optimization degradation as an unsolved problem) Tj ET
+BT /F1 9.20 Tf 45.00 487.50 Td (and ask for self-stabilizing compilers. None of these systems measures the IR between passes or reverts a single) Tj ET
+BT /F1 9.20 Tf 45.00 476.00 Td (harmful pass. This motivates OptiGuard, which scores each IR state in situ and treats every pass as a) Tj ET
+BT /F1 9.20 Tf 45.00 464.50 Td (commit-or-rollback transaction.) Tj ET
+BT /F2 12.00 Tf 45.00 441.00 Td (Novelty - 2 M) Tj ET
+BT /F1 9.50 Tf 45.00 428.00 Td (OptiGuard differs from the literature reviewed in the following ways:) Tj ET
+BT /F2 9.20 Tf 50.00 416.00 Td (*) Tj ET
+BT /F2 9.20 Tf 60.00 416.00 Td (Transactional compilation model:) Tj ET
+BT /F1 9.20 Tf 220.80 416.00 Td (* Transactional compilation model: database-style atomicity and consistency are applied to phase ordering, so) Tj ET
+BT /F1 9.20 Tf 60.00 404.50 Td (every pass is a speculative transaction that is either committed or rolled back. Existing pipelines are) Tj ET
+BT /F1 9.20 Tf 60.00 393.00 Td (sequential and irreversible.) Tj ET
+BT /F2 9.20 Tf 50.00 379.50 Td (*) Tj ET
+BT /F2 9.20 Tf 60.00 379.50 Td (In-situ cost evaluation J\(IR\):) Tj ET
+BT /F1 9.20 Tf 211.00 379.50 Td (* In-situ cost evaluation J\(IR\): passes are scored directly on the TAC using instruction count, live intervals) Tj ET
+BT /F1 9.20 Tf 60.00 368.00 Td (and operator-weighted ALU cycles, which removes the target-hardware re-execution that GA and) Tj ET
+BT /F1 9.20 Tf 60.00 356.50 Td (iterative-compilation approaches need.) Tj ET
+BT /F2 9.20 Tf 50.00 343.00 Td (*) Tj ET
+BT /F2 9.20 Tf 60.00 343.00 Td (Micro-pass granularity with atomic rollback:) Tj ET
+BT /F1 9.20 Tf 279.60 343.00 Td (* Micro-pass granularity with atomic rollback: degradation is detected and reverted at the level of a single) Tj ET
+BT /F1 9.20 Tf 60.00 331.50 Td (pass, so the culprit is isolated. Prior work discards or merely penalizes an entire sequence.) Tj ET
+BT /F2 9.20 Tf 50.00 318.00 Td (*) Tj ET
+BT /F2 9.20 Tf 60.00 318.00 Td (Tabu-driven adaptive scheduling:) Tj ET
+BT /F1 9.20 Tf 220.80 318.00 Td (* Tabu-driven adaptive scheduling: a degrading pass is recorded in a tabu list for that IR state, which prevents) Tj ET
+BT /F1 9.20 Tf 60.00 306.50 Td (cyclic rollbacks and steers the scheduler toward alternative passes chosen from IR features.) Tj ET
+BT /F3 9.20 Tf 45.00 289.00 Td (Formal novelty statement: unlike existing compiler optimization pipelines that apply transformations sequentially) Tj ET
+BT /F3 9.20 Tf 45.00 277.50 Td (and irreversibly regardless of intermediate code deterioration, OptiGuard introduces a fail-safe, transactional) Tj ET
+BT /F3 9.20 Tf 45.00 266.00 Td (compiler architecture that combines IR feature) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 5 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Times-Italic >> /F4 << /Type /Font /Subtype /Type1 /BaseFont /Times-BoldItalic >> >> >> >>
+endobj
+9 0 obj
+<< /Length 3998 >>
+stream
+BT /F3 9.20 Tf 45.00 800.00 Td (profiling with a multi-objective cost evaluation model and a stack-based state rollback engine. Passes are) Tj ET
+BT /F3 9.20 Tf 45.00 788.50 Td (accepted only when they yield a quantifiable structural improvement.) Tj ET
+BT /F2 12.00 Tf 45.00 755.00 Td (Project Timeline & Assessment Schedule) Tj ET
+0.92 g 45.00 721.95 505.00 19.05 re f 0 g
+0.50 w 45.00 721.95 505.00 19.05 re S
+BT /F2 8.50 Tf 51.84 726.50 Td (S.No) Tj ET
+0.50 w 75.00 741.00 m 75.00 721.95 l S
+BT /F2 8.50 Tf 78.00 726.50 Td (Assessment Details) Tj ET
+0.50 w 205.00 741.00 m 205.00 721.95 l S
+BT /F2 8.50 Tf 208.00 726.50 Td (Scope & Deliverables) Tj ET
+0.50 w 410.00 741.00 m 410.00 721.95 l S
+BT /F2 8.50 Tf 424.14 726.50 Td (Weightage) Tj ET
+0.50 w 475.00 741.00 m 475.00 721.95 l S
+BT /F2 8.50 Tf 496.18 726.50 Td (Due Date) Tj ET
+0.50 w 45.00 673.45 505.00 48.50 re S
+BT /F1 8.50 Tf 57.96 709.45 Td (1) Tj ET
+0.50 w 75.00 721.95 m 75.00 673.45 l S
+BT /F2 8.50 Tf 78.00 709.45 Td (Assessment 8) Tj ET
+BT /F2 8.50 Tf 78.00 699.25 Td (Project Review 1) Tj ET
+0.50 w 205.00 721.95 m 205.00 673.45 l S
+BT /F2 8.50 Tf 208.00 709.45 Td (Problem Identification & Objectives \(2M\)) Tj ET
+BT /F2 8.50 Tf 208.00 699.25 Td (Literature Survey \(2M\)) Tj ET
+BT /F2 8.50 Tf 208.00 689.05 Td (Novelty \(2M\)) Tj ET
+BT /F2 8.50 Tf 208.00 678.85 Td (Presentation & Q&A \(2M\)) Tj ET
+0.50 w 410.00 721.95 m 410.00 673.45 l S
+BT /F1 8.50 Tf 426.18 709.45 Td (10 Marks) Tj ET
+0.50 w 475.00 721.95 m 475.00 673.45 l S
+BT /F1 8.50 Tf 492.10 709.45 Td (24.09.2026) Tj ET
+BT /F1 8.50 Tf 502.30 699.25 Td (\(EOD\)) Tj ET
+0.50 w 45.00 635.58 505.00 37.88 re S
+BT /F1 8.50 Tf 57.96 660.95 Td (2) Tj ET
+0.50 w 75.00 673.45 m 75.00 635.58 l S
+BT /F1 8.50 Tf 78.00 660.95 Td (25% Implementation) Tj ET
+BT /F1 8.50 Tf 78.00 650.75 Td (Review) Tj ET
+0.50 w 205.00 673.45 m 205.00 635.58 l S
+BT /F1 8.50 Tf 208.00 660.95 Td (Working prototype demo: Lexer, Parser, AST,) Tj ET
+BT /F1 8.50 Tf 208.00 650.75 Td (Three-Address Code \(TAC\), 3 Optimization Passes,) Tj ET
+BT /F1 8.50 Tf 208.00 640.55 Td (and Metrics Evaluator) Tj ET
+0.50 w 410.00 673.45 m 410.00 635.58 l S
+BT /F1 8.50 Tf 428.22 660.95 Td (2 Marks) Tj ET
+0.50 w 475.00 673.45 m 475.00 635.58 l S
+BT /F1 8.50 Tf 492.10 660.95 Td (08/10/2026) Tj ET
+BT /F1 8.50 Tf 488.02 650.75 Td (\(1st wk Oct\)) Tj ET
+0.50 w 45.00 576.45 505.00 59.12 re S
+BT /F1 8.50 Tf 57.96 623.08 Td (3) Tj ET
+0.50 w 75.00 635.58 m 75.00 576.45 l S
+BT /F2 8.50 Tf 78.00 623.08 Td (Assessment 9) Tj ET
+BT /F2 8.50 Tf 78.00 612.88 Td (Project Review 2) Tj ET
+0.50 w 205.00 635.58 m 205.00 576.45 l S
+BT /F1 8.50 Tf 208.00 623.08 Td (75% Implementation progress: IR Feature) Tj ET
+BT /F1 8.50 Tf 208.00 612.88 Td (Profiler, Degradation Detection Unit, Stack) Tj ET
+BT /F1 8.50 Tf 208.00 602.67 Td (Rollback \(6M\)) Tj ET
+BT /F1 8.50 Tf 208.00 592.47 Td (Progress Report / Docs \(2M\)) Tj ET
+BT /F1 8.50 Tf 208.00 582.27 Td (Presentation & Q&A \(2M\)) Tj ET
+0.50 w 410.00 635.58 m 410.00 576.45 l S
+BT /F1 8.50 Tf 426.18 623.08 Td (10 Marks) Tj ET
+0.50 w 475.00 635.58 m 475.00 576.45 l S
+BT /F1 8.50 Tf 490.06 623.08 Td (3rd Week of) Tj ET
+BT /F1 8.50 Tf 488.02 612.88 Td (October 2026) Tj ET
+0.50 w 45.00 527.95 505.00 48.50 re S
+BT /F1 8.50 Tf 57.96 563.95 Td (4) Tj ET
+0.50 w 75.00 576.45 m 75.00 527.95 l S
+BT /F2 8.50 Tf 78.00 563.95 Td (Assessment 10) Tj ET
+BT /F2 8.50 Tf 78.00 553.75 Td (Project Demo & Outcome) Tj ET
+0.50 w 205.00 576.45 m 205.00 527.95 l S
+BT /F1 8.50 Tf 208.00 563.95 Td (100% Project Completion & Final Demo \(3M\)) Tj ET
+BT /F1 8.50 Tf 208.00 553.75 Td (Individual Contribution \(3M\)) Tj ET
+BT /F1 8.50 Tf 208.00 543.55 Td (Final Research Manuscript / Patent Specification) Tj ET
+BT /F1 8.50 Tf 208.00 533.35 Td (\(4M\)) Tj ET
+0.50 w 410.00 576.45 m 410.00 527.95 l S
+BT /F1 8.50 Tf 426.18 563.95 Td (10 Marks) Tj ET
+0.50 w 475.00 576.45 m 475.00 527.95 l S
+BT /F1 8.50 Tf 490.06 563.95 Td (4th Week of) Tj ET
+BT /F1 8.50 Tf 488.02 553.75 Td (October 2026) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 7 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Times-Italic >> /F4 << /Type /Font /Subtype /Type1 /BaseFont /Times-BoldItalic >> >> >> >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000139 00000 n 
+0000005654 00000 n 
+0000006025 00000 n 
+0000018257 00000 n 
+0000018628 00000 n 
+0000027777 00000 n 
+0000028148 00000 n 
+0000032198 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+32570
+%%EOF

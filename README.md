@@ -1,20 +1,22 @@
-# OptiGuard: An Adaptive Compiler Optimization Framework with Degradation Detection and Safe Rollback
+# OptiGuard: Adaptive Compiler Optimization Framework with Degradation Detection and Safe Rollback
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Build Status](https://img.shields.io/badge/Tests-6%2F6%20Passed-brightgreen.svg)]()
-[![Milestone](https://img.shields.io/badge/Milestone-25%25%20Prototype%20Completed-success.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-39%2F39%20Passed-brightgreen.svg)]()
+[![Milestone](https://img.shields.io/badge/Milestone-100%25%20Complete-success.svg)]()
 
-> **OptiGuard** is an intermediate representation (IR) level compiler optimization framework that addresses the **Phase-Ordering Problem** and prevents **Optimization Degradation**. Rather than executing a rigid, unverified sequence of passes, OptiGuard evaluates transformations using an analytical multi-objective cost function and provides **transactional state rollback** to guarantee monotonically non-degrading code generation.
+> **OptiGuard** is an IR-level compiler optimization framework that solves the **Phase-Ordering Problem** and prevents **Optimization Degradation**. Rather than executing a rigid, unverified sequence of passes, OptiGuard evaluates transformations using a multi-objective cost function $J(IR)$ and provides **transactional rollback** to guarantee monotonically non-degrading code generation.
 
 ---
 
 ## Key Highlights
 
-- **Phase-Ordering Aware:** Compiler passes are non-commutative ($Pass_A \circ Pass_B \neq Pass_B \circ Pass_A$). OptiGuard tracks IR state changes per pass.
-- **Optimization Degradation Detection:** Detects when a pass inadvertently inflates code size or triggers hardware register spills.
-- **Transactional State Rollback:** Snapshots IR state before pass execution; if degradation occurs ($\Delta J(IR) \ge 0$), the IR is atomically reverted to the prior stable state.
-- **Pure Zero-Dependency Architecture:** Clean, modular implementation in Python 3 for educational and systems research.
+- **Adaptive Phase Ordering:** Selects the next optimization pass at runtime using a 12-dimensional IR feature vector — no fixed pass sequence.
+- **Degradation Detection:** Computes $J(IR) = w_1 \cdot \text{instrs} + w_2 \cdot \text{cycles} + w_3 \cdot \text{temps}$; flags any pass that doesn't strictly improve J.
+- **Transactional Rollback:** Snapshots IR before each pass; if $\Delta J \geq 0$, atomically reverts to the prior stable state.
+- **Tabu Search Convergence:** Tracks failed passes in a tabu list; terminates when all passes are exhausted.
+- **6 Optimization Passes:** Constant Folding, Algebraic Simplification, Dead Code Elimination, CSE, Strength Reduction, Copy Propagation.
+- **Zero Dependencies:** Pure Python 3.8+ — no external libraries.
 
 ---
 
@@ -31,15 +33,16 @@
                   └──────────────┬───────────────┘
                                  │
                    ┌─────────────▼───────────────┐
-             ┌────►│    IR Feature Extractor     │◄─────────────┐
+             ┌────►│  IR Feature Profiler (12-d) │◄─────────────┐
              │     └─────────────┬───────────────┘              │
-             │                   │ Feature Vector               │
+             │                   │ FeatureVector                │
              │     ┌─────────────▼───────────────┐              │
-             │     │   Adaptive Pass Selector    │              │
+             │     │ Adaptive Pass Selector      │              │
+             │     │ (Tabu Search Heuristic)     │              │
              │     └─────────────┬───────────────┘              │
-             │                   │ Select Pass P_k              │
+             │                   │ Select Pass Pₖ               │
              │     ┌─────────────▼───────────────┐              │
-             │     │  Checkpoint IR to Snapshot  │              │
+             │     │  SnapshotStack.push(IR)     │              │
              │     └─────────────┬───────────────┘              │
              │                   │ Apply Optimization Pass      │
              │     ┌─────────────▼───────────────┐              │
@@ -49,17 +52,16 @@
              │     ┌─────────────▼───────────────┐              │
              │     │  Degradation Detector Unit  │              │
              │     └───────┬──────────────┬──────┘              │
-      Pass Accepted        │              │  Degradation Found  │
-     (J_new < J_prev)      │              │  (J_new >= J_prev)  │
+      ΔJ < 0 (ACCEPT)      │              │  ΔJ ≥ 0 (ROLLBACK) │
              │             ▼              ▼                     │
-             │        [ Commit IR ]  [ ROLLBACK ] ──────────────┘
-             │             │              │ Restore Snapshot &
-             └─────────────┤              │ Add P_k to Tabu List
-                           ▼              ▼
+             │     [commit() + accept]  [pop() + tabu] ─────────┘
+             │             │
+             └─────────────┤
+                           ▼
                    ┌──────────────────────────────┐
-                   │ Convergence & Budget Check   │
+                   │ Convergence / Budget Check   │
                    └──────────────┬───────────────┘
-                                  │ Done
+                                  │ All passes in tabu → Done
                                   ▼
                    ┌──────────────────────────────┐
                    │     Optimized TAC Output     │
@@ -68,64 +70,108 @@
 
 ---
 
-## Current Status (25% Milestone Completed)
+## Project Status — 100% Complete ✅
 
-The **25% prototype** is fully operational and includes:
-1. **Frontend:** Lexer and Recursive Descent Parser supporting arithmetic expressions, assignments, and operator precedence.
-2. **Intermediate Representation:** Three-Address Code (TAC) quadruple generation with atomic state snapshotting (`clone()`).
-3. **Three Active Optimization Passes:**
-   - **Constant Folding & Propagation:** Folds compile-time arithmetic ($10 \times 2 \to 20$) and propagates constants.
-   - **Algebraic Simplification:** Simplifies algebraic identities ($x + 0 \to x$, $x \times 1 \to x$, $x \times 0 \to 0$, $x/1 \to x$).
-   - **Dead-Code Elimination (DCE):** Backward liveness analysis pruning dead temporaries and superseded assignments.
-4. **Metrics & Cost Evaluator:** Quantifies instruction count reduction, distinct variable count, and ALU cycle costs (weights: Add/Sub = 1, Mul = 3, Div = 8).
+| Component | Status | Description |
+|---|---|---|
+| Frontend (Lexer, Parser, AST) | ✅ Done | C-subset tokenization & recursive descent parsing |
+| IR: TAC + clone/snapshot | ✅ Done | Three-address code with atomic deep-copy |
+| Pass 1: Constant Folding | ✅ Done | Compile-time arithmetic + constant propagation |
+| Pass 2: Algebraic Simplification | ✅ Done | x+0, x×1, x×0, x/1 identity elimination |
+| Pass 3: Dead Code Elimination | ✅ Done | Backward liveness analysis, iterative fixed-point |
+| Pass 4: CSE | ✅ Done | Available-expressions analysis |
+| Pass 5: Strength Reduction | ✅ Done | x\*2→x+x, x\*4→t+t, power-of-two div |
+| Pass 6: Copy Propagation | ✅ Done | Forward substitution + kill analysis |
+| IR Feature Profiler | ✅ Done | 12-dimensional feature vector |
+| Degradation Detector | ✅ Done | J(IR) cost function, ΔJ decision |
+| Snapshot Stack | ✅ Done | LIFO transactional rollback |
+| Adaptive Selector | ✅ Done | Heuristic scoring + tabu list |
+| Adaptive Pipeline | ✅ Done | Full loop with budget, convergence |
+| Benchmark Suite (8 programs) | ✅ Done | Automated runner + comparison table |
+| CLI | ✅ Done | `python3 -m optiguard.cli` |
+| 39 Unit Tests | ✅ Done | All 39 pass |
+| Review 2 Report | ✅ Done | 75% implementation documentation |
+| Final Report | ✅ Done | IEEE-style abstract, results, novelty |
 
 ---
 
-## Quick Start & Demo
+## Quick Start
 
-### 1. Run the Interactive Verification Demo
+### 1. Run the Full Adaptive Demo
 ```bash
 python3 demo.py
 ```
 
-### Sample Output:
+### 2. Run All Unit Tests
+```bash
+python3 -m unittest discover -s tests -p "test_*.py" -v
 ```
-######################### TEST CASE 1: Canonical Phase-Ordering Benchmark #########################
 
-[1] INPUT SOURCE CODE:
+### 3. Run Benchmark Suite
+```bash
+python3 benchmark/run_benchmarks.py
+# Compare adaptive vs sequential:
+python3 benchmark/run_benchmarks.py --compare
+```
+
+### 4. CLI Usage
+```bash
+# From file
+python3 -m optiguard.cli input.c --verbose --features
+
+# From stdin
+echo "a = 10 * 2; b = a + 0; c = b;" | python3 -m optiguard.cli
+```
+
+### 5. Python API
+```python
+from optiguard.pipeline import OptiGuardPipeline
+
+pipeline = OptiGuardPipeline(use_adaptive=True)
+result = pipeline.optimize("""
+    a = 10 * 2;
+    b = a + 0;
+    c = b;
+""")
+print(result.final_tac.dump())
+print(result.improvement_summary)
+```
+
+---
+
+## Sample Output
+
+```
+══════════════════  CASE 1: Canonical Phase-Ordering Benchmark  ══════════════════
+
+[1] SOURCE CODE:
     a = 10 * 2;
     b = a + 0;
     c = b;
 
-[2] GENERATED RAW THREE-ADDRESS CODE (TAC / IR):
+[2] INITIAL TAC / IR:
   0:  t0 = 10 * 2
   1:  a = t0
   2:  t1 = a + 0
   3:  b = t1
   4:  c = b
-    -> Baseline Metrics: Instructions: 5 | Variables: 5 (Temps: 2) | Est. Cycles: 7
+    → Instructions: 5 | Variables: 5 (Temps: 2) | Est. Cycles: 7
 
-[3] STEP-BY-STEP OPTIMIZATION PASS EXECUTION:
-  --- Pass 1: ConstantFolding [MODIFIED] ---
-  --- Pass 2: AlgebraicSimplification [NO CHANGE] ---
-  --- Pass 3: DeadCodeElimination [MODIFIED] ---
+[3] IR FEATURE VECTOR:
+    instructions=5  temp_density=0.40  const_density=0.33
+    add_sub=0.20  mul=0.20  div=0.00  copy=0.60
 
-[4] FINAL OPTIMIZED THREE-ADDRESS CODE:
-  0:  a = 20
-  1:  b = 20
-  2:  c = 20
+[4] ADAPTIVE PASS EXECUTION:
+    Pass                                   Decision       ΔJ       Instrs   Cycles
+    ─────────────────────────────────────────────────────────────────────────────
+    CopyPropagation                        ✗ ROLLBACK  +0.000     5→5      7→7
+    DeadCodeElimination                    ✗ ROLLBACK  +0.000     5→5      7→7
+    ConstantFolding                        ✓ COMMIT    -1.000     5→5      7→5
+    ...
 
-[5] QUANTITATIVE EVALUATION REPORT:
-    Raw Instructions Before : 5
-    Raw Instructions After  : 3
-    Instructions Eliminated : 2
-    Code Size Reduction     : 40.0%
-    ALU Cycle Cost Reduction: 57.14%
-```
-
-### 2. Run Automated Unit Tests
-```bash
-python3 -m unittest discover -s tests -p "test_*.py" -v
+[6] QUANTITATIVE IMPROVEMENT REPORT:
+    Instructions: 5 → 5  (−0 = 0.0% reduction)
+    ALU Cycles  : 7 → 5  (−2 = 28.6% reduction)
 ```
 
 ---
@@ -135,48 +181,35 @@ python3 -m unittest discover -s tests -p "test_*.py" -v
 ```
 optiguard/
 ├── optiguard/
-│   ├── __init__.py
-│   ├── frontend/
-│   │   ├── __init__.py
-│   │   ├── lexer.py             # Tokenizer for C-like syntax
-│   │   ├── parser.py            # Recursive descent AST parser
-│   │   └── ast_nodes.py         # Abstract syntax tree node definitions
-│   ├── ir/
-│   │   ├── __init__.py
-│   │   ├── tac.py               # Three-Address Code and snapshot cloning
-│   │   └── ir_generator.py      # Lowers AST to TAC
-│   ├── passes/
-│   │   ├── __init__.py
-│   │   ├── constant_folding.py  # Constant folding & propagation
-│   │   ├── algebraic_simplification.py # Arithmetic identity elimination
-│   │   └── dead_code_elimination.py    # Backward liveness analysis
-│   ├── metrics/
-│   │   ├── __init__.py
-│   │   └── cost_evaluator.py    # Analytical cost model J(IR)
-│   └── pipeline.py              # Optimization orchestrator
-├── docs/
-│   └── REVIEW_1_PRESENTATION.md # Slide deck, script & Q&A defense
-├── tests/
-│   ├── __init__.py
-│   └── test_optiguard.py        # 6 unit tests
-├── demo.py                      # Interactive CLI demonstration
-├── README.md
-└── LICENSE
+│   ├── frontend/          # Lexer, Parser, AST
+│   ├── ir/                # TAC data structures
+│   ├── passes/            # 6 optimization passes
+│   ├── profiler/          # IR feature extraction
+│   ├── rollback/          # Snapshot stack + degradation detector
+│   ├── search/            # Adaptive pass selector (tabu search)
+│   ├── metrics/           # Cost evaluator
+│   ├── pipeline.py        # Main optimizer orchestrator
+│   └── cli.py             # Command-line interface
+├── benchmark/             # 8 benchmark programs + runner
+├── docs/                  # All reports and presentations
+├── tests/                 # 39 unit tests
+├── demo.py                # Interactive demo
+└── setup.py               # pip-installable
 ```
 
 ---
 
-## Roadmap & Milestone Schedule
+## Milestone Schedule
 
-| Milestone | Target Date | Status | Key Deliverables |
-| :--- | :--- | :--- | :--- |
-| **Review 1** | Sep 24–25, 2026 | **Ready** | Problem Formulation, Literature Survey, Novelty, Q&A Defense |
-| **25% Prototype** | 1st Wk Oct 2026 | **Completed** | Lexer, Parser, AST, TAC IR, 3 Passes, Cost Evaluator, CLI Demo |
-| **Review 2 (75%)** | 3rd Wk Oct 2026 | *Upcoming* | Feature Profiler, Degradation Detector, Stack Rollback, Progress Report |
-| **Final Demo (100%)** | 4th Wk Oct 2026 | *Upcoming* | Adaptive Search Engine, Full Benchmarks, IEEE Paper / Patent Draft |
+| Milestone | Target Date | Status | Deliverables |
+|---|---|---|---|
+| **Review 1** | Sep 24–25, 2026 | ✅ **Done** | Problem Formulation, Literature Survey, Novelty, Q&A |
+| **25% Prototype** | 1st Wk Oct 2026 | ✅ **Done** | Lexer, Parser, AST, TAC IR, 3 Passes, Cost Evaluator |
+| **Review 2 (75%)** | 3rd Wk Oct 2026 | ✅ **Done** | Profiler, Detector, Rollback, Adaptive Selector, 3 New Passes |
+| **Final Demo (100%)** | 4th Wk Oct 2026 | ✅ **Done** | Full System, 8 Benchmarks, CLI, 39 Tests, Reports |
 
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
